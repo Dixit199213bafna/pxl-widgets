@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { BeerServiceService} from "../services/beer-service.service";
-import { ResponseData } from '../response-data';
+import {Component, OnInit} from '@angular/core';
+import {BeerServiceService} from "../services/beer-service.service";
+import * as _ from "lodash";
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-beer-list',
@@ -9,55 +11,84 @@ import { ResponseData } from '../response-data';
 })
 export class BeerListComponent implements OnInit {
 
+  beerPerCategoryBackup = {}
   location = {};
-  beerPerCountry = {};
+  beerPerCategory = {};
   columnDefs = [
-    {headerName: 'Name', field: 'nameDisplay' },
+    {headerName: 'Name', field: 'nameDisplay'},
   ];
-  country = {};
+  groupBy = {};
+  public filterFiled: string;
+  filterDataUpdate = new Subject<string>();
+  selectedValue = 'countryIsoCode';
 
-  responseData = {
-    data : []
-  };
-  panelOpenState = false;
+  constructor(private beerServiceService: BeerServiceService) {
 
-  rowData = [];
-  constructor(private beerServiceService: BeerServiceService) { }
+    this.filterDataUpdate.pipe(
+      debounceTime(400),
+      distinctUntilChanged())
+      .subscribe(value => {
+        this.filterData(value);
+      });
+  }
 
   ngOnInit(): void {
-    this.fetchBeerData();
+    this.fetchBeerData('countryIsoCode');
   }
 
-  keys() : Array<string> {
-    return Object.keys(this.country);
+  filterData(value) {
+    const newList = {};
+    for (const country in this.beerPerCategoryBackup) {
+      newList[country] = _.filter(this.beerPerCategoryBackup[country], function(beer){
+        return beer.name.includes(value);
+      });
+    }
+    this.beerPerCategory = {...newList};
   }
 
-  fetchBeerData() {
+  someMethod(c) {
+    this.location = {};
+    this.beerPerCategory = {};
+    this.groupBy = {};
+    this.filterFiled = '';
+    this.fetchBeerData(c);
+    // this.filterData();
+  }
+
+  fetchBeerData(category) {
     this.beerServiceService.fetchLocation().subscribe(response => {
       response['data'].forEach(r => {
-        if(!this.location[r.countryIsoCode]) {
-          this.location[r.countryIsoCode] = [];
-          this.country = {
-            ...this.country,
-            [r.countryIsoCode]: r['country'].displayName,
+        if (!this.location[r[category]]) {
+          this.location[r[category]] = [];
+          if (category === 'countryIsoCode') {
+            this.groupBy = {
+              ...this.groupBy,
+              [r[category]]: r['country'].displayName,
+            }
+          } else if (category === 'locationType') {
+            this.groupBy = {
+              ...this.groupBy,
+              [r[category]]: r['locationTypeDisplay'],
+            }
           }
         }
-        !this.location[r.countryIsoCode].includes(r.breweryId) ? this.location[r.countryIsoCode].push(r.breweryId) :  false;
-        console.log(this.country);
+        !this.location[r[category]].includes(r.breweryId) ? this.location[r[category]].push(r.breweryId) : false;
       });
-      this.beerPerCountry = {};
+      this.beerPerCategory = {};
       for (const country in this.location) {
-        if(!this.beerPerCountry[country]) {
-          this.beerPerCountry[country] = [];
+        if (!this.beerPerCategory[country]) {
+          this.beerPerCategory[country] = [];
         }
         this.location[country].forEach(brewId => {
           this.beerServiceService.fetchBeerPerBrewId(brewId).subscribe(response => {
-            this.beerPerCountry[country] = [
-              ...this.beerPerCountry[country],
+            this.beerPerCategory[country] = [
+              ...this.beerPerCategory[country],
               ...response['data'],
             ];
-            console.log(this.beerPerCountry);
-          })
+            // console.log(this.beerPerCategory);
+            this.beerPerCategoryBackup = {...this.beerPerCategory};
+            console.log(this.beerPerCategoryBackup);
+          });
         });
       }
     });

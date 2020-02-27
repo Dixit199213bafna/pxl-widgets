@@ -5,10 +5,15 @@ import { AgGridModule } from 'ag-grid-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { BeerListComponent } from './beer-list/beer-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -20,9 +25,14 @@ import { MatExpansionModule } from '@angular/material/expansion';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     AgGridModule.withComponents([]),
     BrowserAnimationsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,27 @@
 <div class="row">
+    <div class="col-lg-2">
+      <mat-form-field>
+        <mat-label>Group By</mat-label>
+        <mat-select name="food" [(value)]="selectedValue" (selectionChange)="someMethod($event.value)">
+          <mat-option value="countryIsoCode">Country</mat-option>
+          <mat-option value="locationType">Location Type</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-2">
+      <mat-form-field class="example-full-width">
+        <mat-label>Filter</mat-label>
+        <input type="text" matInput [(ngModel)]="filterFiled"
+               type="text" name="filterFiled" id="filterFiled"
+               (ngModelChange)="this.filterDataUpdate.next($event)">
+      </mat-form-field>
+    </div>
+</div>
+
+<div class="row">
   <div class="col-xs-12">
       <mat-accordion>
-        <mat-expansion-panel *ngFor="let item of country | keyvalue">
+        <mat-expansion-panel *ngFor="let item of groupBy | keyvalue" [disabled]="beerPerCategory[item.key].length === 0">
           <mat-expansion-panel-header>
             <mat-panel-title  >
               {{item.value}}
@@ -13,7 +33,7 @@
             [enableSorting]="true"
             [enableFilter]="true"
             [pagination]="true"
-            [rowData]="beerPerCountry[item.key]"
+            [rowData]="beerPerCategory[item.key]"
             [columnDefs]="columnDefs"
           >
           </ag-grid-angular>
