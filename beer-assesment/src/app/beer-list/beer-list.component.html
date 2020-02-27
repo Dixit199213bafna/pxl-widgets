@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-xs-12">
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let item of country | keyvalue">
+          <mat-expansion-panel-header>
+            <mat-panel-title  >
+              {{item.value}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ag-grid-angular
+            style="width: 250px; height: 500px;"
+            class="ag-theme-material"
+            [enableSorting]="true"
+            [enableFilter]="true"
+            [pagination]="true"
+            [rowData]="beerPerCountry[item.key]"
+            [columnDefs]="columnDefs"
+          >
+          </ag-grid-angular>
+        </mat-expansion-panel>
+      </mat-accordion>
+  </div>
+</div>
