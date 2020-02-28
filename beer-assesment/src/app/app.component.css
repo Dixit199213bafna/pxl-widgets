@@ -1,3 +1,9 @@
-.container {
+.container-fluid {
   margin-top: 20px;
+}
+
+.beer-list {
+  border-right: 2px solid #ccc;
+  height: 700px;
+  /*max-height: 900px;*/
 }

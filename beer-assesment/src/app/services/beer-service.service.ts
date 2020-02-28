@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export class BeerServiceService {
 
-  private messageSource = new BehaviorSubject('default message');
+  private messageSource = new BehaviorSubject(null);
   currentMessage = this.messageSource.asObservable();
 
   constructor(private http: HttpClient) { }

@@ -14,6 +14,8 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card'
+
 import { BeerDetailComponentComponent } from './beer-detail-component/beer-detail-component.component';
 
 @NgModule({
@@ -34,7 +36,8 @@ import { BeerDetailComponentComponent } from './beer-detail-component/beer-detai
     MatSelectModule,
     MatButtonModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
