@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-2">
+    <div class="col-lg-3">
       <mat-form-field>
         <mat-label>Group By</mat-label>
         <mat-select name="food" [(value)]="selectedValue" (selectionChange)="someMethod($event.value)">
@@ -8,7 +8,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-3">
       <mat-form-field class="example-full-width">
         <mat-label>Filter</mat-label>
         <input type="text" matInput [(ngModel)]="filterFiled"
@@ -27,14 +27,15 @@
               {{item.value}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <ag-grid-angular
+          <ag-grid-angular #agGrid{{item.key}}
             style="width: 250px; height: 500px;"
             class="ag-theme-material"
-            [enableSorting]="true"
-            [enableFilter]="true"
+            [defaultColDef]="defaultColDef"
             [pagination]="true"
+            [rowSelection]="rowSelection"
             [rowData]="beerPerCategory[item.key]"
             [columnDefs]="columnDefs"
+            (selectionChanged)="onSelectionChanged($event)"
           >
           </ag-grid-angular>
         </mat-expansion-panel>

@@ -10,30 +10,44 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./beer-list.component.css']
 })
 export class BeerListComponent implements OnInit {
-
+  defaultColDef
+  columnDefs;
+  rowSelection;
+  rowData;
   beerPerCategoryBackup = {}
   location = {};
   beerPerCategory = {};
-  columnDefs = [
-    {headerName: 'Name', field: 'nameDisplay'},
-  ];
   groupBy = {};
   public filterFiled: string;
   filterDataUpdate = new Subject<string>();
   selectedValue = 'countryIsoCode';
 
   constructor(private beerServiceService: BeerServiceService) {
-
+    this.columnDefs = [
+      {headerName: 'Name', field: 'nameDisplay'},
+    ];
+    this.rowData = [];
+    this.rowSelection = "single";
     this.filterDataUpdate.pipe(
       debounceTime(400),
       distinctUntilChanged())
       .subscribe(value => {
         this.filterData(value);
       });
+    this.defaultColDef = {
+      sortable: true,
+      resizable: true,
+      filter: true
+    };
   }
 
   ngOnInit(): void {
     this.fetchBeerData('countryIsoCode');
+  }
+
+  onSelectionChanged(event) {
+    const selectedRows = event.api.getSelectedRows();
+    this.fetchBeerPerId(selectedRows[0].id);
   }
 
   filterData(value) {
@@ -52,7 +66,18 @@ export class BeerListComponent implements OnInit {
     this.groupBy = {};
     this.filterFiled = '';
     this.fetchBeerData(c);
-    // this.filterData();
+  }
+
+  // onSelectionChanged(event) {
+  //   this.fetchBeerPerId(event.node.data.id);
+  //   console.log(event.node.data);
+  // }
+
+  fetchBeerPerId(id) {
+    this.beerServiceService.fetchBeerPerBeerId(id).subscribe(response => {
+      console.log(response);
+      this.beerServiceService.changeMessage(response['data']);
+    })
   }
 
   fetchBeerData(category) {
@@ -85,9 +110,7 @@ export class BeerListComponent implements OnInit {
               ...this.beerPerCategory[country],
               ...response['data'],
             ];
-            // console.log(this.beerPerCategory);
             this.beerPerCategoryBackup = {...this.beerPerCategory};
-            console.log(this.beerPerCategoryBackup);
           });
         });
       }

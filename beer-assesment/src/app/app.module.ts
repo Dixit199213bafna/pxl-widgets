@@ -14,12 +14,14 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+import { BeerDetailComponentComponent } from './beer-detail-component/beer-detail-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    BeerListComponent
+    BeerListComponent,
+    BeerDetailComponentComponent
   ],
   imports: [
     BrowserModule,
