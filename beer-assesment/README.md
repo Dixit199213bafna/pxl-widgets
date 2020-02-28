@@ -10,13 +10,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Run `npm start` for a dev server. 
 - Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-##Components
+## Components
 
 - Used ag-grid to group the data country and type wise.
 - Also used Angular Material for various components.
 - Used Bootstrap CSS.
 
-##How to Use Application
+## How to Use Application
 
 - On Load you will be the accordian grouped by country.
 - We have a dropdown to change the group by with location type.
