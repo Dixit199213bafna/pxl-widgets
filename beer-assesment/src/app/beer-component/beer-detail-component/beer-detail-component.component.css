@@ -1,0 +1,8 @@
+.tp-card {
+  max-width: 600px;
+}
+
+.mat-card-avatar {
+  height: 50px !important;
+  width: 50px !important;
+}

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BeerServiceService} from "../services/beer-service.service";
+import {BeerServiceService} from "../../services/beer-service.service";
 import * as _ from "lodash";
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -75,8 +75,7 @@ export class BeerListComponent implements OnInit {
 
   fetchBeerPerId(id) {
     this.beerServiceService.fetchBeerPerBeerId(id).subscribe(response => {
-      console.log(response);
-      this.beerServiceService.changeMessage(response['data']);
+      this.beerServiceService.changeBeer(response['data']);
     })
   }
 

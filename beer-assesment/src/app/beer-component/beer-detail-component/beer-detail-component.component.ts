@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BeerServiceService} from "../services/beer-service.service";
+import {BeerServiceService} from "../../services/beer-service.service";
 
 @Component({
   selector: 'app-beer-detail-component',
@@ -9,14 +9,13 @@ import {BeerServiceService} from "../services/beer-service.service";
 export class BeerDetailComponentComponent implements OnInit {
 
   beer;
-  photo = 'https://brewerydb-images.s3.amazonaws.com/beer/Y8Ar6h/upload_r6bhFI-icon.png';
 
   constructor(private beerServiceService: BeerServiceService) {
     this.beer = null;
   }
 
   ngOnInit() {
-    this.beerServiceService.currentMessage.subscribe(beer => this.beer = beer)
+    this.beerServiceService.currentBeer.subscribe(beer => this.beer = beer)
   }
 
 }

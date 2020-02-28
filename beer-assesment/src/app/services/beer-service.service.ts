@@ -8,8 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 
 export class BeerServiceService {
 
-  private messageSource = new BehaviorSubject(null);
-  currentMessage = this.messageSource.asObservable();
+  private beerSource = new BehaviorSubject(null);
+  currentBeer = this.beerSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -25,7 +25,7 @@ export class BeerServiceService {
     return this.http.get(`v2/beer/${id}?key=659d5c6b8f3d2447f090119e48202fdb`);
   }
 
-  changeMessage(obj) {
-    this.messageSource.next(obj)
+  changeBeer(obj) {
+    this.beerSource.next(obj)
   }
 }
