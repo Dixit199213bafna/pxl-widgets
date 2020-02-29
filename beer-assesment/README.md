@@ -19,6 +19,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Used ag-grid to group the data country and type wise.
 - Also used Angular Material for various components.
 - Used Bootstrap CSS.
+- Used testcafe for functional test cases
 
 ## How to Use Application
 
