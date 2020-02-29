@@ -10,13 +10,14 @@
     </div>
     <div class="col-lg-6">
       <mat-form-field class="example-full-width">
-        <mat-label>Filter</mat-label>
-        <input type="text" matInput [(ngModel)]="filterFiled"
+        <mat-label>Filter by beer name</mat-label>
+        <input id="filter" type="text" matInput [(ngModel)]="filterFiled"
                type="text" name="filterFiled" id="filterFiled"
                (ngModelChange)="this.filterDataUpdate.next($event)">
       </mat-form-field>
     </div>
-  <div class="col-lg-12">
+  <div class="col-lg-12" id="countryGroup">
+      <mat-spinner style="margin:0 auto;" *ngIf="isLoading"></mat-spinner>
       <mat-accordion>
         <mat-expansion-panel *ngFor="let item of groupBy | keyvalue" [disabled]="beerPerCategory[item.key].length === 0">
           <mat-expansion-panel-header>
@@ -25,6 +26,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <ag-grid-angular
+            id="{{item.key}}"
             class="ag-theme-material"
             [defaultColDef]="defaultColDef"
             [pagination]="true"

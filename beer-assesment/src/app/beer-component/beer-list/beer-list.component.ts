@@ -21,6 +21,7 @@ export class BeerListComponent implements OnInit {
   public filterFiled: string;
   filterDataUpdate = new Subject<string>();
   selectedValue = 'countryIsoCode';
+  isLoading;
 
   constructor(private beerServiceService: BeerServiceService) {
     this.columnDefs = [
@@ -80,8 +81,10 @@ export class BeerListComponent implements OnInit {
   }
 
   fetchBeerData(category) {
+    this.isLoading = true;
     this.beerServiceService.fetchLocation().subscribe(response => {
       response['data'].forEach(r => {
+        this.isLoading = false;
         if (!this.location[r[category]]) {
           this.location[r[category]] = [];
           if (category === 'countryIsoCode') {

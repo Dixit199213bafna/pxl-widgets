@@ -13,6 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card'
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { BeerDetailComponentComponent } from './beer-component/beer-detail-component/beer-detail-component.component';
 import { BeerComponentComponent } from './beer-component/beer-component.component';
@@ -39,7 +40,8 @@ import { BeerListComponent } from './beer-component/beer-list/beer-list.componen
     MatButtonModule,
     MatInputModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
