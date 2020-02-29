@@ -10,6 +10,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Run `npm start` for a dev server. 
 - Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Run the Functional test cases
+
+- npm install -g testcafe
+- npm run e2e-test
+
 ## Components
 
 - Used ag-grid to group the data country and type wise.
